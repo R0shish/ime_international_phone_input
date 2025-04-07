@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:intl_phone_number_input_v2/src/models/country_model.dart';
-import 'package:intl_phone_number_input_v2/src/utils/util.dart';
+import 'package:ime_international_phone_input/src/models/country_model.dart';
+import 'package:ime_international_phone_input/src/utils/util.dart';
 
 /// [Item]
 class Item extends StatelessWidget {
@@ -13,7 +13,7 @@ class Item extends StatelessWidget {
   final bool trailingSpace;
 
   const Item({
-    Key? key,
+    super.key,
     this.country,
     this.showFlag,
     this.useEmoji,
@@ -21,7 +21,7 @@ class Item extends StatelessWidget {
     this.withCountryNames = false,
     this.leadingPadding = 12,
     this.trailingSpace = true,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -29,30 +29,22 @@ class Item extends StatelessWidget {
     if (trailingSpace) {
       dialCode = dialCode.padRight(5, "   ");
     }
-    return Container(
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.start,
-        mainAxisSize: MainAxisSize.min,
-        children: <Widget>[
-          SizedBox(width: leadingPadding),
-          _Flag(
-            country: country,
-            showFlag: showFlag,
-            useEmoji: useEmoji,
-          ),
-          SizedBox(width: 12.0),
-          Text(
-            '$dialCode',
-            textDirection: TextDirection.ltr,
-            style: textStyle,
-          ),
-          Icon(
-            Icons.keyboard_arrow_down_sharp,
-            color: Colors.grey,
-            size: 14,
-          ),
-        ],
-      ),
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.start,
+      mainAxisSize: MainAxisSize.min,
+      children: <Widget>[
+        SizedBox(width: leadingPadding),
+        _Flag(
+          country: country,
+          showFlag: showFlag,
+          useEmoji: useEmoji,
+        ),
+        Text(
+          dialCode,
+          textDirection: TextDirection.ltr,
+          style: textStyle,
+        ),
+      ],
     );
   }
 }
@@ -62,26 +54,29 @@ class _Flag extends StatelessWidget {
   final bool? showFlag;
   final bool? useEmoji;
 
-  const _Flag({Key? key, this.country, this.showFlag, this.useEmoji})
-      : super(key: key);
+  const _Flag({this.country, this.showFlag, this.useEmoji});
 
   @override
   Widget build(BuildContext context) {
     return country != null && showFlag!
-        ? Container(
-            child: useEmoji!
-                ? Text(
-                    Utils.generateFlagEmojiUnicode(country?.alpha2Code ?? ''),
-                    style: Theme.of(context).textTheme.headlineSmall,
-                  )
-                : Image.asset(
-                    country!.flagUri,
-                    width: 32.0,
-                    package: 'intl_phone_number_input_v2',
-                    errorBuilder: (context, error, stackTrace) {
-                      return SizedBox.shrink();
-                    },
-                  ),
+        ? Padding(
+            padding: const EdgeInsets.symmetric(vertical: 12.0, horizontal: 8.0),
+            child: Container(
+              child: useEmoji!
+                  ? Text(
+                      Utils.generateFlagEmojiUnicode(country?.alpha2Code ?? ''),
+                      style: Theme.of(context).textTheme.headlineSmall,
+                    )
+                  : SizedBox(
+                      height: 24,
+                      width: 24,
+                      child: CircleAvatar(
+                        backgroundImage: AssetImage(
+                          country!.flagUri,
+                        ),
+                      ),
+                    ),
+            ),
           )
         : SizedBox.shrink();
   }

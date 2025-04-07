@@ -3,8 +3,8 @@ import 'dart:math';
 
 import 'package:collection/collection.dart' show IterableExtension;
 import 'package:equatable/equatable.dart';
-import 'package:intl_phone_number_input_v2/src/models/country_list.dart';
-import 'package:intl_phone_number_input_v2/src/utils/phone_number/phone_number_util.dart';
+import 'package:ime_international_phone_input/src/models/country_list.dart';
+import 'package:ime_international_phone_input/src/utils/phone_number/phone_number_util.dart';
 
 /// Type of phone numbers.
 enum PhoneNumberType {
@@ -60,11 +60,9 @@ class PhoneNumber extends Equatable {
     String phoneNumber, [
     String isoCode = '',
   ]) async {
-    RegionInfo regionInfo = await PhoneNumberUtil.getRegionInfo(
-        phoneNumber: phoneNumber, isoCode: isoCode);
+    RegionInfo regionInfo = await PhoneNumberUtil.getRegionInfo(phoneNumber: phoneNumber, isoCode: isoCode);
 
-    String? internationalPhoneNumber =
-        await PhoneNumberUtil.normalizePhoneNumber(
+    String? internationalPhoneNumber = await PhoneNumberUtil.normalizePhoneNumber(
       phoneNumber: phoneNumber,
       isoCode: regionInfo.isoCode ?? isoCode,
     );
@@ -93,13 +91,13 @@ class PhoneNumber extends Equatable {
         '',
       );
     } else {
-      throw new Exception('ISO Code is "${phoneNumber.isoCode}"');
+      throw Exception('ISO Code is "${phoneNumber.isoCode}"');
     }
   }
 
   /// Returns a String of [phoneNumber] without [dialCode]
   String parseNumber() {
-    return this.phoneNumber!.replaceAll("${this.dialCode}", '');
+    return phoneNumber!.replaceAll("$dialCode", '');
   }
 
   /// For predefined phone number returns Country's [isoCode] from the dial code,
@@ -107,8 +105,7 @@ class PhoneNumber extends Equatable {
   static String? getISO2CodeByPrefix(String prefix) {
     if (prefix.isNotEmpty) {
       prefix = prefix.startsWith('+') ? prefix : '+$prefix';
-      var country = Countries.countryList
-          .firstWhereOrNull((country) => country['dial_code'] == prefix);
+      var country = Countries.countryList.firstWhereOrNull((country) => country['dial_code'] == prefix);
       if (country != null && country['alpha_2_code'] != null) {
         return country['alpha_2_code'];
       }
@@ -118,10 +115,8 @@ class PhoneNumber extends Equatable {
 
   /// Returns [PhoneNumberType] which is the type of phone number
   /// Accepts [phoneNumber] and [isoCode] and r
-  static Future<PhoneNumberType> getPhoneNumberType(
-      String phoneNumber, String isoCode) async {
-    PhoneNumberType type = await PhoneNumberUtil.getNumberType(
-        phoneNumber: phoneNumber, isoCode: isoCode);
+  static Future<PhoneNumberType> getPhoneNumberType(String phoneNumber, String isoCode) async {
+    PhoneNumberType type = await PhoneNumberUtil.getNumberType(phoneNumber: phoneNumber, isoCode: isoCode);
 
     return type;
   }

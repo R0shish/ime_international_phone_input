@@ -36,18 +36,13 @@ class Country {
       alpha3Code: data['alpha_3_code'],
       dialCode: data['dial_code'],
       flagUri: 'assets/flags/${data['alpha_2_code'].toLowerCase()}.png',
-      nameTranslations: data['nameTranslations'] != null
-          ? Map<String, String>.from(data['nameTranslations'])
-          : null,
+      nameTranslations: data['nameTranslations'] != null ? Map<String, String>.from(data['nameTranslations']) : null,
     );
   }
 
   @override
   bool operator ==(Object other) {
-    return other is Country &&
-        other.alpha2Code == this.alpha2Code &&
-        other.alpha3Code == this.alpha3Code &&
-        other.dialCode == this.dialCode;
+    return other is Country && other.alpha2Code == alpha2Code && other.alpha3Code == alpha3Code && other.dialCode == dialCode;
   }
 
   @override

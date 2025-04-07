@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:intl_phone_number_input_v2/src/models/country_model.dart';
-import 'package:intl_phone_number_input_v2/src/widgets/input_widget.dart';
+import 'package:ime_international_phone_input/src/models/country_model.dart';
+import 'package:ime_international_phone_input/src/widgets/input_widget.dart';
 
 /// [CountryComparator] takes two countries: A and B.
 ///
@@ -35,15 +35,17 @@ class SelectorConfig {
 
   /// Use safe area for selectorType=BOTTOM_SHEET
   final bool useBottomSheetSafeArea;
+  final bool isSelectorEnabled;
 
   const SelectorConfig({
-    this.selectorType = PhoneInputSelectorType.DROPDOWN,
-    this.showFlags = true,
-    this.useEmoji = false,
-    this.countryComparator,
+    this.selectorType = PhoneInputSelectorType.BOTTOM_SHEET,
     this.setSelectorButtonAsPrefixIcon = false,
-    this.leadingPadding,
     this.trailingSpace = true,
+    this.showFlags = true,
+    this.useEmoji = true,
+    this.leadingPadding = 0,
+    this.countryComparator,
+    this.isSelectorEnabled = true,
     this.useBottomSheetSafeArea = false,
   });
 }
