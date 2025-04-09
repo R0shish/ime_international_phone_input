@@ -9,6 +9,7 @@ import 'package:ime_international_phone_input/src/widgets/item.dart';
 class SelectorButton extends StatelessWidget {
   final List<Country> countries;
   final Country? country;
+  final InputDecoration? decoration;
   final SelectorConfig selectorConfig;
   final TextStyle? selectorTextStyle;
   final InputDecoration? searchBoxDecoration;
@@ -31,6 +32,7 @@ class SelectorButton extends StatelessWidget {
     required this.onCountryChanged,
     required this.isEnabled,
     required this.isScrollControlled,
+    this.decoration,
   });
 
   @override
@@ -61,11 +63,16 @@ class SelectorButton extends StatelessWidget {
                 textStyle: selectorTextStyle,
               )
         : Container(
+            alignment: Alignment.centerLeft,
+            width: 117,
             decoration: BoxDecoration(
-              border: Border.all(color: Theme.of(context).colorScheme.outline, width: 2.0),
+              border: Border.all(color: Theme.of(context).colorScheme.outline, width: 1.4),
               borderRadius: BorderRadius.circular(8.0),
             ),
             child: MaterialButton(
+              splashColor: Colors.transparent,
+              highlightColor: Colors.transparent,
+              highlightElevation: 0,
               padding: EdgeInsets.zero,
               minWidth: 0,
               onPressed: selectorConfig.isSelectorEnabled
@@ -85,7 +92,7 @@ class SelectorButton extends StatelessWidget {
                       : null
                   : null,
               child: Padding(
-                padding: const EdgeInsets.only(right: 8.0),
+                padding: const EdgeInsets.only(right: 8.0, left: 12.0),
                 child: Item(
                   country: country,
                   showFlag: selectorConfig.showFlags,

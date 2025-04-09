@@ -371,6 +371,7 @@ class _InputWidgetView extends WidgetView<InternationalPhoneNumberInput, _InputW
               SizedBox(
                 height: 56,
                 child: SelectorButton(
+                  decoration: state.getInputDecoration(widget.inputDecoration),
                   country: state.country,
                   countries: state.countries,
                   onCountryChanged: state.onCountryChanged,
